@@ -1,0 +1,19 @@
+name: Deploy QA
+on:
+  push:
+    branches:
+      - QA
+jobs:
+  FTP-Deploy-QA-Action:
+    name: FTP-Deploy-QA-Action
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2.1.0
+      with:
+        fetch-depth: 2
+    - name: FTP-Deploy-QA-Action
+      uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME_QA }}
+        password: ${{ secrets.FTP_PASSWORD_QA }}

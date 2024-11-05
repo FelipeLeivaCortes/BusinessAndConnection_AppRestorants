@@ -138,4 +138,52 @@ class TableController extends Controller {
         $table->delete();
         return back()->with('success', _lang('Deleted Successfully'));
     }
+
+    /**
+     * Show the form for update the background image.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function edit_background(Request $request, $hallId) {
+        if (!$request->ajax()) {
+            return back();
+        } else {
+            return view('backend.user.table.modal.update_background', compact('hallId'));
+        }
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update_background(Request $request, $id) {
+        $validator = Validator::make($request->all(), [
+            'new_url'        => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            if ($request->ajax()) {
+                return response()->json(['result' => 'error', 'message' => $validator->errors()->all()]);
+            } else {
+                return back()->withErrors($validator)->withInput();
+            }
+        }
+
+        // $table              = Table::find($id);
+        // $table->table_no    = $request->input('table_no');
+        // $table->type        = $request->input('type');
+        // $table->chair_limit = $request->input('chair_limit');
+
+        // $table->save();
+
+        // if (!$request->ajax()) {
+        //     return back()->with('success', _lang('Updated Successfully'));
+        // } else {
+        //     return response()->json(['result' => 'success', 'action' => 'update', 'message' => _lang('Updated Successfully'), 'data' => $table, 'table' => '#tables_table']);
+        // }
+
+    }
 }

@@ -40,6 +40,77 @@ class PageController extends Controller {
         return view('backend.admin.website_management.page.default-list');
     }
 
+    public function delete_images_attached (Request $request) {
+
+        $error  = true;
+
+        switch ($request->src) {
+            case 'home_page_media':
+                $record = Setting::where('name', 'home_page_media')->first();
+            
+                if ($record) {
+                    $data   = json_decode($record['value'], true);
+
+                    if (array_key_exists($request->data, $data)) {
+                        unset($data[$request->data]);
+                    }
+
+                    $record['value']    = json_encode($data);
+                    $record->save();
+
+                    $error  = false;
+                }
+
+                break;
+
+            case 'about_page_media':
+                $record = Setting::where('name', 'about_page_media')->first();
+            
+                if ($record) {
+                    $data   = json_decode($record['value'], true);
+
+                    if (array_key_exists($request->data, $data)) {
+                        unset($data[$request->data]);
+                    }
+
+                    $record['value']    = json_encode($data);
+                    $record->save();
+
+                    $error  = false;
+                }
+
+                break;
+
+            case 'header_footer_page_media':
+                $record = Setting::where('name', 'header_footer_page_media')->first();
+            
+                if ($record) {
+                    $data   = json_decode($record['value'], true);
+
+                    if (array_key_exists($request->data, $data)) {
+                        unset($data[$request->data]);
+                    }
+
+                    $record['value']    = json_encode($data);
+                    $record->save();
+
+                    $error  = false;
+                }
+
+                break;
+            
+            default:
+                # code...
+                break;
+        }
+
+        if ($error) {
+            return response()->json(['error' => 'No Data Found'], 404);
+        } else {
+            return response()->json(['success' => 'Deleted Successfully']);
+        }
+    }
+
     public function store_default_pages(Request $request) {
         foreach ($_POST as $key => $value) {
             if ($key == "_token" || $key == "model_language") {continue;}
@@ -76,7 +147,6 @@ class PageController extends Controller {
 
         }
 
-        //Upload File
         foreach ($_FILES as $key => $value) {
             $this->upload_file($key, $request);
         }

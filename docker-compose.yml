@@ -3,8 +3,7 @@ services:
     container_name: database
     image: mariadb:10.5.25
     volumes:
-      - ./database/db/database:/var/lib/mysql
-      - ./database/db/init.cnf:/etc/mysql/init.cnf
+      - ./database/curve_pos:/var/lib/mysql
     ports:
       - ${DB_PORT}:3306
     environment:

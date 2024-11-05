@@ -103,6 +103,10 @@
 						        <label class="control-label">{{ _lang('Payment Gateway Image') }}</label>
 						        <input type="file" class="dropify" name="header_footer_page_media[payment_gateway_image]" data-default-file="{{ isset($pageMedia->payment_gateway_image) ? asset('public/uploads/media/'.$pageMedia->payment_gateway_image) : '' }}">
 					        </div>
+
+							<?php if (isset($pageMedia->payment_gateway_image)) { ?>
+								<button type="button" class="btn btn-sm btn-danger deleteImage" data-src="payment_gateway_image">Eliminar</button>
+							<?php } ?>
 					    </div>
 
 						<div class="col-md-12">
@@ -130,6 +134,47 @@
 	    </div>
 	</div>
 </form>
+
+<script type="text/javascript" defer>
+	document.addEventListener('DOMContentLoaded', function() {
+		const buttons = document.querySelectorAll('.deleteImage');
+
+		buttons.forEach(function(button) {
+			button.addEventListener('click', function() {
+				const urlTemplate = `{{ route('pages.default_pages.delete_attached', ':slug') }}`;
+				const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+				const dataSrc = button.getAttribute('data-src');
+				const slug = 'about';
+
+				const data = new FormData();
+				data.append('_token', token);
+				data.append('src', 'header_footer_page_media');
+				data.append('data', dataSrc);
+				data.append('slug', slug);
+
+				const url = urlTemplate.replace(':slug', slug);
+
+				$.ajax({
+					url: url,
+					method: "POST",
+					data: data,
+					contentType: false,
+					processData: false,
+					success: function(response) {
+						if (response.success === 'Deleted Successfully') {
+							window.location.reload();
+						}
+					},
+					error: function(error) {
+						console.log('Error:', error);
+						// Manejar el error
+					}
+				});
+			});
+		});
+	});
+</script>
+
 @endsection
 
 

@@ -60,22 +60,23 @@
 
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Amount Paid') }} ({{ currency_symbol(request()->activeBusiness->currency) }})</label>						
+				<label class="control-label">{{ _lang('Amount Paid') }} ({{ currency_symbol(request()->activeBusiness->currency) }})</label>
 				<input type="text" class="form-control float-amount" id="receivedAmount" name="amount" value="{{ old('amount', $paidAmount) }}">
 			</div>
 		</div>
 
 		<div class="col-lg-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Change Amount') }} ({{ currency_symbol(request()->activeBusiness->currency) }})</label>						
-				<input type="text" class="form-control" id="changeAmount" value="{{ $paidAmount > 0 ? formatAmount($paidAmount - $grandTotal) : 0 }}" readonly>
+				<label class="control-label">{{ _lang('Change Amount') }} ({{ currency_symbol(request()->activeBusiness->currency) }})</label>
+				<input type="text" class="form-control" id="changeAmount" value="{{ $paidAmount }}" readonly>
+				{{-- <input type="text" class="form-control"  value="{{ $paidAmount > 0 ? formatAmount($paidAmount - $grandTotal) : 0 }}" readonly> --}}
 			</div>
 		</div>
 
 		@if($orderType == 'table')
 		<div class="col-lg-12">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Customer') }}</label>						
+				<label class="control-label">{{ _lang('Customer') }}</label>
 				<select class="form-control select2-ajax" data-value="id" data-display="name" data-table="customers" 
 				data-where="3" data-title="{{ _lang('Add New Customer') }}" data-href="{{ route('customers.create') }}" 
 				name="customer_id">
@@ -86,7 +87,7 @@
 
 		<div class="col-lg-12">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Note') }}</label>						
+				<label class="control-label">{{ _lang('Note') }}</label>
 				<textarea class="form-control" name="note">{{ $orderStatus != null ? $order->note : old('note') }}</textarea>
 			</div>
 		</div>
@@ -96,5 +97,6 @@
 				<button type="submit" class="btn btn-primary btn-block"><i class="ti-check-box mr-2"></i> {{ _lang('Submit') }}</button>
 			</div>
 		</div>
+		
 	</div>
 </form>

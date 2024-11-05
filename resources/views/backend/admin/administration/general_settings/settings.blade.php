@@ -6,7 +6,7 @@
 		<ul class="nav flex-column nav-tabs settings-tab mb-4" role="tablist">
 			 <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#general"><i class="fas fa-cog"></i><span>{{ _lang('General Settings') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#system"><i class="fas fa-tools"></i><span>{{ _lang('System Settings') }}</span></a></li>
-			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#currency_settings"><i class="fas fa-pound-sign"></i><span>{{ _lang('Currency Settings') }}</span></a></li>
+			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#currency_settings"><i class="fas fa-dollar-sign"></i><span>{{ _lang('Currency Settings') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#email"><i class="far fa-envelope"></i><span>{{ _lang('Email Settings') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#recaptcha"><i class="far fa-check-circle"></i><span>{{ _lang('Google Recaptcha V3') }}</span></a></li>
 			 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#cron_jobs"><i class="far fa-clock"></i><span>{{ _lang('Cron Jobs') }}</span></a></li>

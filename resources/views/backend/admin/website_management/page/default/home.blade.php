@@ -61,6 +61,10 @@
 						        <label class="control-label">{{ _lang('Hero Image') }}</label>
 						        <input type="file" class="dropify" name="home_page_media[hero_image]" data-default-file="{{ isset($pageMedia->hero_image) ? asset('public/uploads/media/'.$pageMedia->hero_image) : '' }}">
 					        </div>
+
+							<?php if (isset($pageMedia->hero_image)) { ?>
+								<button type="button" class="btn btn-sm btn-danger deleteImage" data-src="hero_image">Eliminar</button>
+							<?php } ?>
 					    </div>
 
 						<div class="col-md-6">
@@ -187,6 +191,10 @@
 					        <div class="form-group">
 						        <label class="control-label">{{ _lang('Newsletter Background') }}</label>
 						        <input type="file" class="dropify" name="home_page_media[newsletter_bg_image]" data-default-file="{{ isset($pageMedia->newsletter_bg_image) ? asset('public/uploads/media/'.$pageMedia->newsletter_bg_image) : '' }}">
+
+								<?php if (isset($pageMedia->newsletter_bg_image)) { ?>
+									<button type="button" class="btn btn-sm btn-danger deleteImage" data-src="newsletter_bg_image">Eliminar</button>
+								<?php } ?>
 					        </div>
 					    </div>
 						
@@ -201,6 +209,47 @@
 	    </div>
 	</div>
 </form>
+
+<script type="text/javascript" defer>
+	document.addEventListener('DOMContentLoaded', function() {
+		const buttons = document.querySelectorAll('.deleteImage');
+
+		buttons.forEach(function(button) {
+			button.addEventListener('click', function() {
+				const urlTemplate = `{{ route('pages.default_pages.delete_attached', ':slug') }}`;
+				const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+				const dataSrc = button.getAttribute('data-src');
+				const slug = 'home';
+
+				const data = new FormData();
+				data.append('_token', token);
+				data.append('src', 'home_page_media');
+				data.append('data', dataSrc);
+				data.append('slug', slug);
+
+				const url = urlTemplate.replace(':slug', slug);
+
+				$.ajax({
+					url: url,
+					method: "POST",
+					data: data,
+					contentType: false,
+					processData: false,
+					success: function(response) {
+						if (response.success === 'Deleted Successfully') {
+							window.location.reload();
+						}
+					},
+					error: function(error) {
+						console.log('Error:', error);
+						// Manejar el error
+					}
+				});
+			});
+		});
+	});
+</script>
+
 @endsection
 
 

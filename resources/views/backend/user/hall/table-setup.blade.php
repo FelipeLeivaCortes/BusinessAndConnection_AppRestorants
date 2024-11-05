@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div class="row">
 	<div class="col-lg-12 d-flex justify-content-center">
 		<div class="card overflow-auto">
@@ -9,6 +10,7 @@
 				<div>
                     <a href="{{ route('tables.index', $hall->id) }}" class="btn btn-dark btn-xs"><i class="fas fa-list-ul"></i> {{ _lang('Table List') }}</a>
 				    <a href="{{ route('tables.create', $hall->id) }}" data-title="{{ _lang('Add New Table') }}" class="btn btn-primary btn-xs ajax-modal"><i class="ti-plus"></i> {{ _lang('Add Table') }}</a>
+					<a href="{{ route('tables.edit_background', $hall->id) }}" data-title="{{ _lang('Update Background Hall') }}" class="btn btn-primary btn-xs ajax-modal"><i class="fas fa-cog"></i> {{ _lang('Update Background Hall') }}</a>
 			    </div>
 			</div>
 			<div class="card-body">

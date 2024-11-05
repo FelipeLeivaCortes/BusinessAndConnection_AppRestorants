@@ -126,6 +126,7 @@ Route::group(['middleware' => ['install']], function () use ($ev) {
 
                 //Page Controller
                 Route::post('pages/store_default_pages/{slug?}', [PageController::class, 'store_default_pages'])->name('pages.default_pages.store');
+                Route::post('pages/delete_images_attached/{slug?}', [PageController::class, 'delete_images_attached'])->name('pages.default_pages.delete_attached');
                 Route::get('pages/default_pages/{slug?}', [PageController::class, 'default_pages'])->name('pages.default_pages');
                 Route::resource('pages', PageController::class)->except('show');
 
@@ -249,6 +250,8 @@ Route::group(['middleware' => ['install']], function () use ($ev) {
             Route::get('tables/{id}/edit', [TableController::class, 'edit'])->name('tables.edit');
             Route::post('tables/{hallId}/store', [TableController::class, 'store'])->name('tables.store');
             Route::get('tables/{hallId}/create', [TableController::class, 'create'])->name('tables.create');
+            Route::get('tables/{hallId}/edit_background', [TableController::class, 'edit_background'])->name('tables.edit_background');
+            Route::post('tables/{hallId}/update_background', [TableController::class, 'update_background'])->name('tables.update_background');
             Route::get('tables/{hallId}', [TableController::class, 'index'])->name('tables.index');
 
             //POS Controller

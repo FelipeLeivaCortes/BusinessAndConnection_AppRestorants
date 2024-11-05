@@ -82,14 +82,6 @@ class CustomerController extends Controller {
     public function store(Request $request) {
         $validator = Validator::make($request->all(), [
             'name'            => 'required|max:50',
-            'email'           => [
-                'required',
-                'email',
-                Rule::unique('customers')->where(function ($query) use ($request) {
-                    return $query->where('user_id', $request->activeBusiness->user_id)
-                        ->where('business_id', $request->activeBusiness->id);
-                }),
-            ],
             'profile_picture' => 'nullable|image|max:2048',
         ]);
 

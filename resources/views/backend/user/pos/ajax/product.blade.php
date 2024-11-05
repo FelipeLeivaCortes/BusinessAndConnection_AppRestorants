@@ -1,10 +1,11 @@
 <div id="productDetailsModal">
     <div class="row p-2">
         <div class="col-lg-12">
+            
             <div class="d-sm-flex align-items-start">
                 <img class="product-image" src="{{ asset('public/uploads/media/' . $product->image) }}">
                 <div class="mt-2 mt-sm-0">
-                    <h4 class="product-title">{{ $product->name }}</h4>            
+                    <h4 class="product-title">{{ $product->name }}</h4>
                     <h5 class="mt-2 price">
                         <strong>
                             <span>{{ _lang('Price') }}:</span>
@@ -47,7 +48,7 @@
                         </tr>
                     @endforeach
                     </tbody>
-                </table>  
+                </table>
                 @endif
             
                 @if($product->addon_products->count() > 0)
@@ -71,7 +72,7 @@
                     </div>   
                 </div>
                 @endif
-            </form>  
+            </form>
 
             <form action="{{ route('pos.add_to_cart', [$product->id, $_GET['table_id']]) }}" class="mt-3" id="add-to-cart-form">    
                 <div class="product-qnt">

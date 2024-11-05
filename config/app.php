@@ -97,7 +97,7 @@ return [
 
     'fallback_locale' => 'es',
 
-    'default_locale' => 'Spanish---es',
+    'default_locale' => 'Español---es',
 
     /*
     |--------------------------------------------------------------------------

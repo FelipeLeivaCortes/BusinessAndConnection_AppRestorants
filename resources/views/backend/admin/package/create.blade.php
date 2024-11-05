@@ -13,26 +13,26 @@
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="form-group row">
-								<label class="col-xl-3 col-form-label">{{ _lang('Package Name') }}</label>						
+								<label class="col-xl-3 col-form-label">{{ _lang('Package Name') }}</label>
 								<div class="col-xl-9">
 									<input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-xl-3 col-form-label">{{ _lang('Package Type') }}</label>						
+								<label class="col-xl-3 col-form-label">{{ _lang('Package Type') }}</label>
 								<div class="col-xl-9">
 									<select class="form-control auto-select" data-selected="{{ old('package_type') }}" name="package_type" required>
 										<option value="">{{ _lang('Select One') }}</option>
-										<option value="monthly">{{ _lang('Monthly') }}</option>
-										<option value="yearly">{{ _lang('Yearly') }}</option>
-										<option value="lifetime">{{ _lang('Lifetime') }}</option>
+										<option value="trimestral">{{ _lang('Quarterly') }}</option>
+										<option value="semestral">{{ _lang('Biannual') }}</option>
+										<option value="anual">{{ _lang('Yearly') }}</option>
 									</select>
 								</div>
 							</div>
 
 							<div class="form-group row">
-								<label class="col-xl-3 col-form-label">{{ _lang('Cost') }} ({{ currency_symbol() }})</label>						
+								<label class="col-xl-3 col-form-label">{{ _lang('Cost') }} ({{ currency_symbol() }})</label>
 								<div class="col-xl-9">
 									<input type="text" class="form-control float-field" name="cost" value="{{ old('cost') }}" required>
 								</div>

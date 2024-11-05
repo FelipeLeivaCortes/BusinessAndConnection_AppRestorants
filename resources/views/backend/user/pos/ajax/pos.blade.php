@@ -36,7 +36,7 @@
 
 
 	<div class="row mt-4">
-		<div class="col-xl-9 col-lg-8 col-md-6 px-4">	
+		<div class="col-xl-9 col-lg-8 col-md-6 px-4">
 			<div id="pos-item-category" class="sticky">
 				<ul>
 					<li><a href="#" data-id="" data-class="" class="active">{{ _lang('All Items') }}</a></li>

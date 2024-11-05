@@ -843,7 +843,7 @@ if (!function_exists('get_language')) {
         if ($language == '') {
             $language = get_option('language');
             if ($language == '') {
-                \Cache::put('language', 'language');
+                \Cache::put('language', 'Español---es');
             } else {
                 \Cache::put('language', $language);
             }
@@ -1145,7 +1145,11 @@ if (!function_exists('update_membership_date')) {
     function update_membership_date($package, $subscription_date) {
         if ($package->package_type == 'monthly') {
             $newDate = date('Y-m-d', strtotime($subscription_date . ' + 1 months'));
-        } else if ($package->package_type == 'yearly') {
+        } else if ($package->package_type == 'trimestral') {
+            $newDate = date('Y-m-d', strtotime($subscription_date . ' + 3 months'));
+        } else if ($package->package_type == 'semestral') {
+            $newDate = date('Y-m-d', strtotime($subscription_date . ' + 6 months'));
+        } else if ($package->package_type == 'yearly' || $package->package_type == 'anual') {
             $newDate = date('Y-m-d', strtotime($subscription_date . ' + 1 years'));
         } else if ($package->package_type == 'lifetime') {
             $newDate = date('Y-m-d', strtotime($subscription_date . ' + 25 years'));

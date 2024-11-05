@@ -24,4 +24,5 @@ yarn-error.log
 
 
 # CUSTOM
-database/db
+database/curve_pos
+Tareas.yml

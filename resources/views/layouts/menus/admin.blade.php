@@ -48,6 +48,6 @@
 <li><a href="{{ route('email_subscribers.index') }}"><i class="far fa-envelope"></i><span>{{ _lang('Email Subscribers') }}</span></a></li>
 
 <li><a href="{{ route('settings.update_settings') }}"><i class="fas fa-cog"></i><span>{{ _lang('System Settings') }}</span></a></li>
-<li><a href="{{ route('currency.index') }}"><i class="fas fa-pound-sign"></i><span>{{ _lang('Currency Management') }}</span></a></li>
+<li><a href="{{ route('currency.index') }}"><i class="fas fa-dollar-sign"></i><span>{{ _lang('Currency Management') }}</span></a></li>
 <li><a href="{{ route('notification_templates.index') }}"><i class="fas fa-envelope-open-text"></i><span>{{ _lang('Notification Templates') }}</span></a></li>
 <li><a href="{{ route('database_backups.list') }}"><i class="fas fa-server"></i><span>{{ _lang('Database Backup') }}</span></a></li>

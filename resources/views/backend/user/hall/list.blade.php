@@ -28,7 +28,7 @@
 							<td class='description'>{{ $hall->description }}</td>
 							<td class='status'>{!! xss_clean(status($hall->status)) !!}</td>
 							
-							<td class="text-center">	
+							<td class="text-center">
 								<form action="{{ route('halls.destroy', $hall['id']) }}" method="post">
 									{{ csrf_field() }}
 									<input name="_method" type="hidden" value="DELETE">

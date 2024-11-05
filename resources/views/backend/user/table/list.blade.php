@@ -25,8 +25,8 @@
 							<td>{{ $table->table_no }}</td>
 							<td>{{ $table->hall->name }}</td>
 							<td>{{ $table->chair_limit }}</td>
-							<td>{{ ucwords($table->type) }}</td>		
-							<td class="text-center">	
+							<td>{{ ucwords($table->type) }}</td>
+							<td class="text-center">
 								<form action="{{ route('tables.destroy', $table['id']) }}" method="post">
 									{{ csrf_field() }}
 									<input name="_method" type="hidden" value="DELETE">

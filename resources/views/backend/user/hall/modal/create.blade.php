@@ -3,14 +3,14 @@
 	<div class="row px-2">
 	    <div class="col-md-12">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Name') }}</label>						
+				<label class="control-label">{{ _lang('Name') }}</label>
 				<input type="text" class="form-control" name="name" value="{{ old('name') }}" required>
 			</div>
 		</div>
 
 		<div class="col-md-12">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Capacity') }}</label>						
+				<label class="control-label">{{ _lang('Capacity') }}</label>
 				<input type="number" class="form-control" name="capacity" value="{{ old('capacity') }}" required>
 			</div>
 		</div>

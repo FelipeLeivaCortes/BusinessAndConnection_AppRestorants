@@ -179,12 +179,13 @@ class TableController extends Controller {
         }
 
         if ($request->hasFile('new_url')) {
-            $file = $request->file('new_url');
-            $filename = time() . '.' . $file->getClientOriginalExtension();
-            $path = $file->storeAs('public/backgrounds', $filename); // Guarda en el directorio 'storage/app/public/backgrounds'
-    
-            // Actualizar la ruta de la imagen en la base de datos
-            $hall->css = $path; // O la columna que corresponda en tu base de datos
+            $file               = $request->file('new_url');
+            $filename           = time() . '.' . $file->getClientOriginalExtension();
+            $destinationPath    = public_path('uploads/media');
+
+            $file->move($destinationPath, $filename);
+            
+            $hall->css          = 'uploads/media/' . $filename;
             $hall->save();
         }
     

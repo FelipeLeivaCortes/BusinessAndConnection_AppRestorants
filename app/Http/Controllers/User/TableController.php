@@ -179,6 +179,18 @@ class TableController extends Controller {
         }
 
         if ($request->hasFile('new_url')) {
+            if ($hall->css) {
+                preg_match("/url$'(.*?)'$/", $hall->css, $matches);
+                if (isset($matches[1])) {
+                    $oldImagePath = str_replace(asset(''), '', $matches[1]);
+                    $oldImageFullPath = public_path($oldImagePath);
+            
+                    if (file_exists($oldImageFullPath)) {
+                        unlink($oldImageFullPath);
+                    }
+                }
+            }
+
             $file               = $request->file('new_url');
             $filename           = time() . '.' . $file->getClientOriginalExtension();
             $destinationPath    = public_path('uploads/media');
@@ -186,6 +198,7 @@ class TableController extends Controller {
             $file->move($destinationPath, $filename);
 
             $imageUrl           = asset('public/uploads/media/' . $filename);
+
             $hall->css          = "background-image: url('$imageUrl') !important;";
             $hall->save();
         }

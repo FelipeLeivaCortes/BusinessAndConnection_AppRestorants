@@ -185,7 +185,7 @@ class TableController extends Controller {
 
             $file->move($destinationPath, $filename);
 
-            $imageUrl           = asset('uploads/media/' . $filename);
+            $imageUrl           = asset('public/uploads/media/' . $filename);
             $hall->css          = "background-image: url('$imageUrl') !important;";
             $hall->save();
         }

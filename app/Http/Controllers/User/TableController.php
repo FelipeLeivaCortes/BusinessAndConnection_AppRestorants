@@ -172,18 +172,22 @@ class TableController extends Controller {
             }
         }
 
-        // $table              = Table::find($id);
-        // $table->table_no    = $request->input('table_no');
-        // $table->type        = $request->input('type');
-        // $table->chair_limit = $request->input('chair_limit');
+        $hall   = Hall::find($id);
 
-        // $table->save();
+        if (!$hall) {
+            return back()->with('error', 'Hall not found.');
+        }
 
-        // if (!$request->ajax()) {
-        //     return back()->with('success', _lang('Updated Successfully'));
-        // } else {
-        //     return response()->json(['result' => 'success', 'action' => 'update', 'message' => _lang('Updated Successfully'), 'data' => $table, 'table' => '#tables_table']);
-        // }
-
+        if ($request->hasFile('new_url')) {
+            $file = $request->file('new_url');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $path = $file->storeAs('public/backgrounds', $filename); // Guarda en el directorio 'storage/app/public/backgrounds'
+    
+            // Actualizar la ruta de la imagen en la base de datos
+            $hall->css = $path; // O la columna que corresponda en tu base de datos
+            $hall->save();
+        }
+    
+        return back()->route('tables.show', $id)->with('success', _lang('Updated Successfully'));
     }
 }

@@ -188,6 +188,6 @@ class TableController extends Controller {
             $hall->save();
         }
     
-        return back()->route('tables.show', $id)->with('success', _lang('Updated Successfully'));
+        return back()->with('success', _lang('Updated Successfully'));
     }
 }

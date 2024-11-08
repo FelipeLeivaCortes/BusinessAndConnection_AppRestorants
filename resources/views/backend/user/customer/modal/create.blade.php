@@ -11,14 +11,14 @@
 		<div class="col-md-6">
 			<div class="form-group">
 				<label class="control-label">{{ _lang('Email') }}</label>						
-				<input type="text" class="form-control" name="email" value="{{ old('email') }}" required>
+				<input type="text" class="form-control" name="email" value="{{ old('email') }}">
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-group">
 				<label class="control-label">{{ _lang('Phone') }}</label>						
-				<input type="text" class="form-control" name="phone" value="{{ old('phone') }}" required>
+				<input type="text" class="form-control" name="phone" value="{{ old('phone') }}">
 			</div>
 		</div>
 
@@ -39,21 +39,21 @@
 
 		<div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Address') }}</label>						
+				<label class="control-label">{{ _lang('Address') }}</label>
 				<textarea class="form-control" name="address">{{ old('address') }}</textarea>
 			</div>
 		</div>
 
 		<div class="col-md-6">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Remarks') }}</label>						
+				<label class="control-label">{{ _lang('Remarks') }}</label>
 				<textarea class="form-control" name="remarks">{{ old('remarks') }}</textarea>
 			</div>
 		</div>
 
 		<div class="col-md-12">
 			<div class="form-group">
-				<label class="control-label">{{ _lang('Profile Picture') }}</label>						
+				<label class="control-label">{{ _lang('Profile Picture') }}</label>
 				<input type="file" class="form-control py-2" name="profile_picture">
 			</div>
 		</div>

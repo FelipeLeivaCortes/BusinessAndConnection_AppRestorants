@@ -169,15 +169,15 @@
 	                            <li class="dropdown d-none d-sm-inline-block">
 									<div class="dropdown">
 									  <a class="dropdown-toggle d-flex align-items-center" type="button" id="selectLanguage" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-										<img class="avatar avatar-xss avatar-circle mr-1" src="{{ get_language() == 'language' ? asset('public/backend/plugins/flag-icon-css/flags/1x1/us.svg') : asset('public/backend/plugins/flag-icon-css/flags/1x1/'.explode('---', get_language())[1].'.svg') }}">
-										<span class="d-none d-md-inline-block">{{ explode('---', get_language())[0] }}</span>
-										<i class="fa fa-angle-down ml-1"></i>
+										<img class="avatar avatar-xss avatar-circle mr-1" src="{{ asset('public/backend/plugins/flag-icon-css/flags/1x1/es.svg') }}">
+										<span class="d-none d-md-inline-block">Español</span>
+										{{-- <i class="fa fa-angle-down ml-1"></i> --}}
 									  </a>
-									  <div class="dropdown-menu" aria-labelledby="selectLanguage">
+									  {{-- <div class="dropdown-menu" aria-labelledby="selectLanguage">
 										@foreach( get_language_list() as $language )
 											<a class="dropdown-item" href="{{ route('switch_language') }}?language={{ $language }}"><img class="avatar avatar-xss avatar-circle mr-1" src="{{ asset('public/backend/plugins/flag-icon-css/flags/1x1/'.explode('---', $language)[1].'.svg') }}"> {{ explode('---', $language)[0] }}</a>
 										@endforeach
-									  </div>
+									  </div> --}}
 									</div>
 								</li>
 

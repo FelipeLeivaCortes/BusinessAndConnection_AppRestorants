@@ -99,6 +99,8 @@ class PermissionController extends Controller {
             }
         }
 
+        // return $permission;
+
         return view('backend.user.system_user.permission.create', compact('permission', 'permission_list', 'role_id', 'alert_col'));
 
     }

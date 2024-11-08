@@ -39,24 +39,28 @@
 								</thead>
 								@foreach($permission as $key => $val)
 									@php
-									$string = isset(explode("\\",$key)[4]) ? str_replace("Controller", "", explode("\\",$key)[4]) : str_replace("Controller", "", explode("\\",$key)[3]);
-									$array = preg_split('/(?=[A-Z])/', $string);
-									$moduleName = implode(' ', $array);
+										$string = isset(explode("\\",$key)[4]) ? str_replace("Controller", "", explode("\\",$key)[4]) : str_replace("Controller", "", explode("\\",$key)[3]);
+										$array = preg_split('/(?=[A-Z])/', $string);
+										$moduleName = strtolower(implode('', $array)); // Unir sin espacios y en minúsculas
+										$translatedModuleName = _lang($moduleName);
 									@endphp
 									<tr>
-										<td><h5>{{ $moduleName }}</h5></td>
+										<td><h5>{{ $translatedModuleName }}</h5></td>
 										<td>
 										@foreach($val as $name => $url)
-											@php $display = str_replace("index", "list", $name); @endphp
-											@php $display = array_reverse(explode('.', $display)); @endphp
-															
+											@php
+												$display = str_replace("index", "list", $name);
+												$display = array_reverse(explode('.', $display));
+												$actionName = strtolower($display[0]); // Convertir a minúsculas
+												$translatedAction = _lang($actionName);
+											@endphp
 											<div class="custom-control custom-checkbox permission-checkbox">
 												<input type="checkbox" class="custom-control-input"
 													name="permissions[]" value="{{ $name }}"
 													id="customCheck{{ $loop->parent->index.$loop->index }}"
 													{{ array_search($name, $permission_list) !== FALSE ? "checked" : "" }}>
 												<label class="custom-control-label"
-													for="customCheck{{ $loop->parent->index.$loop->index }}">{{ strtoupper(str_replace('_', ' ', $display[0])) }}</label>
+													for="customCheck{{ $loop->parent->index.$loop->index }}">{{ strtoupper($translatedAction) }}</label>
 											</div>
 										@endforeach
 										</td>

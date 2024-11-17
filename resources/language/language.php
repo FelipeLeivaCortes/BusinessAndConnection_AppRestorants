@@ -2,6 +2,14 @@
 
 $language=array();
 
+$language["Way To Pay"]             = "Forma de Pago";
+$language["All Method To Pay"]      = "Métodos de Pagos Seleccionados";
+$language["Total Pay"]              = "Pago Total";
+$language["pago_total"]             = "Pago Total";
+$language["total_pay"]              = "Pago Total";
+$language["partial_pay"]            = "Pago Múltiple";
+$language["Partial Pay"]            = "Pago Múltiple";
+
 
 $language['current_month_sales_widget'] = 'Ventas del Mes Actual';
 $language['current_day_sales_widget'] = 'Ventas del Día Actual';

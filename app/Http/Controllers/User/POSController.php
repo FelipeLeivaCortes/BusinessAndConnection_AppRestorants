@@ -348,37 +348,91 @@ class POSController extends Controller {
 
             return view('backend.user.pos.ajax.place-order', $data);
         } else {
-            $cart = new Cart($table_id);
+            $cart   = new Cart($table_id);
+
+            if ($cart->getGrandTotal() == 0) {
+                return response()->json(['result' => false, 'message' => _lang('No items found in the cart !')]);
+            }
 
             $validator = Validator::make($request->all(), [
-                'payment_method' => 'required',
-                'status'         => 'required',
-                'amount'         => 'nullable|required_if:status,5|numeric',
-                'customer_id'    => $cart->getOrderType() != 'table' ? 'required' : 'nullable',
+                'way_to_pay'    => 'nullable|required_if:status,0|string',
+                'status'        => 'required',
+                'total_paid'    => 'required_if:status,1,2,3,4,5,6|string',
+                'customer_id'   => $cart->getOrderType() != 'table' ? 'required' : 'nullable',
             ], [
-                'amount.required_if'      => _lang('Payment required before completing this order !'),
-                'customer_id.required_if' => _lang('Customer field is required'),
+                'way_to_pay.required_if'    => 'Se debe seleccionar la forma del pago',
+                'customer_id.required_if'   => _lang('Customer field is required'),
             ]);
 
             if ($validator->fails()) {
                 return response()->json(['result' => false, 'message' => $validator->errors()->all()]);
             }
 
-            if ($cart->getGrandTotal() == 0) {
-                return response()->json(['result' => false, 'message' => _lang('No items found in the cart !')]);
+            if ($request->status == 0) {
+                if ($request->way_to_pay == 'partial_pay') {
+                    $validator = Validator::make($request->all(), [
+                        'methodPayment' => 'required|array|min:1',
+                        'amountPayment' => 'required|array|min:1',
+                    ], [
+                        'methodPayment.required'    => 'Los métodos de pago son obligatorios',
+                        'amountPayment.required'    => 'Los montos pagados son obligatorios'
+                    ]);
+        
+                    if ($validator->fails()) {
+                        return response()->json(['result' => false, 'message' => $validator->errors()->all()]);
+                    }
+    
+                    $amount         = 0;
+                    $amountPaid     = '';
+                    $payment_method = '';
+
+                    for ($i=0; $i<sizeof($request->amountPayment); $i++) {
+                        $amount         += intval($request->amountPayment[$i]);
+                        $amountPaid     = $amountPaid . $request->amountPayment[$i] . '|';
+                        $payment_method = $payment_method . $request->methodPayment[$i] . '|';
+                    }
+
+                    $amountPaid     = rtrim($amountPaid, "|");
+                    $payment_method = rtrim($payment_method, "|");
+
+                } else {
+                    $validator = Validator::make($request->all(), [
+                        'amount'            => 'required|numeric',
+                        'payment_method'    => 'required|string'
+                    ], [
+                        'amount.required'           => _lang('Payment required before completing this order !'),
+                        'payment_method.required'   => 'El método de pago es obligatorio'
+                    ]);
+
+                    if ($validator->fails()) {
+                        return response()->json(['result' => false, 'message' => $validator->errors()->all()]);
+                    }
+
+                    $amount         = $request->amount;
+                    $amountPaid     = strval($request->amount);
+                    $payment_method = $request->payment_method;
+                }
+            } else {
+                $amount     = $request->grand_total;
             }
 
             if ($cart->getOrderId() != null) {
                 $existingOrder = Order::where('id', $cart->getOrderId())->first();
             }
 
-            if ($cart->getGrandTotal() > $request->amount && $request->status == 5) {
-                return response()->json(['result' => false, 'message' => _lang('Payment required before completing this order !')]);
+            if ($request->status == 5) {
+                $total_paid = explode('.', $request->total_paid)[0];
+                $total_paid = str_replace(',', '', $total_paid);
+
+                if ($cart->getGrandTotal() > intval($total_paid)) {
+                    return response()->json(['result' => false, 'message' => _lang('Payment required before completing this order !')]);
+                }
             }
 
             $table = Table::with('hall')->find($table_id);
 
             DB::beginTransaction();
+
             if ($cart->getOrderId() == null) {
                 $order               = new Order();
                 $order->order_number = get_business_option('invoice_number', '100001');
@@ -387,17 +441,23 @@ class POSController extends Controller {
                 $order->items()->whereNotIn('cart_id', $cart->getItems()->keys()->toArray())->delete();
                 $order->taxes()->whereNotIn('id', $cart->getTaxes()->pluck('id'))->delete();
             }
+
             $order->sub_total           = $cart->getSubTotal();
             $order->discount_percentage = $cart->getDiscount('percentage');
             $order->discount            = $cart->getDiscount('rawAmount');
             $order->service_charge      = $cart->getServiceCharge('rawAmount');
             $order->grand_total         = $cart->getGrandTotal();
-            if ($request->amount > 0) {
-                $order->paid = $request->amount;
+
+            if ($request->status == 0) {
+                $order->payment_method      = $payment_method;
+                $order->payment_amount      = $amountPaid;
+                $order->way_payment         = $request->way_to_pay;
+                $order->paid                = $amount;
             }
+
             $order->note           = $request->note;
             $order->status         = $request->status;
-            $order->payment_method = $request->payment_method;
+            
             $order->order_type     = $cart->getOrderType();
             $order->delivery_time  = $request->delivery_time;
             $order->table_id       = $table_id;
@@ -450,11 +510,13 @@ class POSController extends Controller {
 
             //Increment Invoice Number
             $message = _lang('Order Updated');
+
             if ($cart->getOrderId() == null) {
                 BusinessSetting::where('name', 'invoice_number')->increment('value');
                 $cart->addOrderNumber($order->order_number);
                 $message = _lang('New Order Placed');
             }
+
             $cart->needUpdate(false);
             $cart->updateOrderStatus($request->status, $order->id);
 
@@ -478,7 +540,6 @@ class POSController extends Controller {
             } else {
                 return response()->json(['result' => false, 'message' => _lang('Something wrong, Please try again !')]);
             }
-
         }
     }
 
